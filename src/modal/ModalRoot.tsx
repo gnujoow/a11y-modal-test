@@ -99,6 +99,11 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
           pointerEvents: 'auto',
         }}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.stopPropagation();
+          }
+        }}
       >
         {/* Modal Content - 스크롤 가능한 영역 */}
         <div
