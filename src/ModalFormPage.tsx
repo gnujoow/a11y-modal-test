@@ -1,12 +1,25 @@
 import { useRef } from 'react';
-import { useSetAtom } from 'jotai';
-import { openModalTypeAtom } from './atoms/modalAtom';
+import { useOpenFormModal } from './api/modalApi';
 import { ModalPortalProvider } from './providers/ModalPortalProvider';
 import ModalRoot from './modal/ModalRoot';
 
 const ModalFormPage = () => {
-  const setOpenModalType = useSetAtom(openModalTypeAtom);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
+  const openFormModal = useOpenFormModal();
+
+  const handleOpenModal = async () => {
+    try {
+      const result = await openFormModal();
+      if (result) {
+        console.log('폼 제출 결과:', result);
+        alert(`제출 완료!\n이름: ${result.name}\n이메일: ${result.email}`);
+      } else {
+        console.log('폼이 취소되었습니다.');
+      }
+    } catch (error) {
+      console.error('모달 오류:', error);
+    }
+  };
 
   return (
     <ModalPortalProvider>
@@ -15,7 +28,7 @@ const ModalFormPage = () => {
         <button
           ref={triggerButtonRef}
           type="button"
-          onClick={() => setOpenModalType('form')}
+          onClick={handleOpenModal}
         >
           신청폼 작성하기
         </button>

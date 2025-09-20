@@ -1,6 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { useId, useRef, useState } from 'react';
 import { openModalTypeAtom } from '../atoms/modalAtom';
+import type { FormData } from '../api/modalApi';
 
 interface FormErrors {
   name?: string;
@@ -50,16 +51,30 @@ const FormModal = () => {
 
     // 유효성 검사 통과 시
     setErrors({});
-    const name = formData.get('name');
-    const email = formData.get('email');
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
 
     console.log('제출되었습니다:', { name, email });
+
+    // Custom event로 결과 전달
+    const event = new CustomEvent<FormData>('modal-form-result', {
+      detail: { name, email }
+    });
+    document.dispatchEvent(event);
+
     setOpenModalType(null);
   };
 
   const handleClickCancel = () => {
     console.log('취소되었습니다.');
     setErrors({});
+
+    // Custom event로 취소 전달
+    const event = new CustomEvent<null>('modal-form-result', {
+      detail: null
+    });
+    document.dispatchEvent(event);
+
     setOpenModalType(null);
   };
 
