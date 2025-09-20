@@ -26,7 +26,7 @@ const FormModal = () => {
 
   return (
     <>
-      <h2 id={modalTitleId}>신청 폼</h2>
+      <h2 id={modalTitleId} tabIndex={-1}>신청 폼</h2>
       <p>이름과 이메일을 입력해주세요.</p>
       <form onSubmit={handleSubmit}>
         <label htmlFor={nameId}>이름</label>
@@ -39,10 +39,12 @@ const FormModal = () => {
         />
         <label htmlFor={emailId}>이메일</label>
         <input type="email" id={emailId} name="email" required />
-        <button type="submit">제출</button>
-        <button type="button" onClick={handleClickCancel}>
-          취소
-        </button>
+        <div>
+          <button type="button" onClick={handleClickCancel}>
+            취소
+          </button>
+          <button type="submit">제출</button>
+        </div>
       </form>
     </>
   );
