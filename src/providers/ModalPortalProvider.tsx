@@ -1,11 +1,20 @@
-import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalPortalContextValue {
   mountNode: HTMLElement | null;
 }
 
-const ModalPortalContext = createContext<ModalPortalContextValue | undefined>(undefined);
+const ModalPortalContext = createContext<ModalPortalContextValue | undefined>(
+  undefined,
+);
 
 interface ModalPortalProviderProps {
   children: ReactNode;
@@ -14,7 +23,7 @@ interface ModalPortalProviderProps {
 
 export function ModalPortalProvider({
   children,
-  containerId = 'modal-mount-point'
+  containerId = 'modal-mount-point',
 }: ModalPortalProviderProps) {
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);

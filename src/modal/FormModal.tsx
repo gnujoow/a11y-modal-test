@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { useId, useRef, useState } from 'react';
-import { openModalTypeAtom } from '../atoms/modalAtom';
 import type { FormData } from '../api/modalApi';
+import { openModalTypeAtom } from '../atoms/modalAtom';
 
 interface FormErrors {
   name?: string;
@@ -58,7 +58,7 @@ const FormModal = () => {
 
     // Custom event로 결과 전달
     const event = new CustomEvent<FormData>('modal-form-result', {
-      detail: { name, email }
+      detail: { name, email },
     });
     document.dispatchEvent(event);
 
@@ -71,7 +71,7 @@ const FormModal = () => {
 
     // Custom event로 취소 전달
     const event = new CustomEvent<null>('modal-form-result', {
-      detail: null
+      detail: null,
     });
     document.dispatchEvent(event);
 
@@ -81,7 +81,7 @@ const FormModal = () => {
   const handleInputChange = (field: keyof FormErrors) => {
     // 입력 시 해당 필드의 에러 제거
     if (errors[field]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
@@ -93,7 +93,9 @@ const FormModal = () => {
 
   return (
     <>
-      <h2 id={modalTitleId} tabIndex={-1}>신청 폼</h2>
+      <h2 id={modalTitleId} tabIndex={-1}>
+        신청 폼
+      </h2>
       <p>이름과 이메일을 입력해주세요.</p>
       <form onSubmit={handleSubmit}>
         <label htmlFor={nameId}>이름</label>
@@ -106,7 +108,7 @@ const FormModal = () => {
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? nameErrorId : undefined}
           style={{
-            border: errors.name ? '1px solid red' : undefined
+            border: errors.name ? '1px solid red' : undefined,
           }}
           onChange={() => handleInputChange('name')}
         />
@@ -120,7 +122,7 @@ const FormModal = () => {
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? emailErrorId : undefined}
           style={{
-            border: errors.email ? '1px solid red' : undefined
+            border: errors.email ? '1px solid red' : undefined,
           }}
           onChange={() => handleInputChange('email')}
         />

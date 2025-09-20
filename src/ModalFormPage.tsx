@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useOpenFormModal } from './api/modalApi';
-import { ModalPortalProvider } from './providers/ModalPortalProvider';
 import ModalRoot from './modal/ModalRoot';
+import { ModalPortalProvider } from './providers/ModalPortalProvider';
 
 const ModalFormPage = () => {
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
@@ -25,11 +25,7 @@ const ModalFormPage = () => {
     <ModalPortalProvider>
       <main>
         <h1>ModalFormPage</h1>
-        <button
-          ref={triggerButtonRef}
-          type="button"
-          onClick={handleOpenModal}
-        >
+        <button ref={triggerButtonRef} type="button" onClick={handleOpenModal}>
           신청폼 작성하기
         </button>
         <ModalRoot triggerRef={triggerButtonRef} />

@@ -13,7 +13,7 @@ export function useFocusManagement({
   containerRef,
   triggerRef,
   titleElementSelector = 'h1, h2, h3, h4, h5, h6, [role="heading"]',
-  restoreFocus = true
+  restoreFocus = true,
 }: UseFocusManagementOptions) {
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
@@ -26,8 +26,15 @@ export function useFocusManagement({
       const focusTitle = () => {
         if (!containerRef.current) return;
 
-        const titleElement = containerRef.current.querySelector(titleElementSelector) as HTMLElement;
-        console.log('Trying to focus title:', titleElement, 'with selector:', titleElementSelector);
+        const titleElement = containerRef.current.querySelector(
+          titleElementSelector,
+        ) as HTMLElement;
+        console.log(
+          'Trying to focus title:',
+          titleElement,
+          'with selector:',
+          titleElementSelector,
+        );
         console.log('Container:', containerRef.current);
 
         if (titleElement) {
@@ -38,8 +45,14 @@ export function useFocusManagement({
           titleElement.focus();
           console.log('Title focused, activeElement:', document.activeElement);
         } else {
-          console.warn('Title element not found with selector:', titleElementSelector);
-          console.warn('Available elements in container:', containerRef.current.innerHTML);
+          console.warn(
+            'Title element not found with selector:',
+            titleElementSelector,
+          );
+          console.warn(
+            'Available elements in container:',
+            containerRef.current.innerHTML,
+          );
         }
       };
 
@@ -60,6 +73,6 @@ export function useFocusManagement({
   }, [isOpen, containerRef, triggerRef, titleElementSelector, restoreFocus]);
 
   return {
-    previousActiveElement: previousActiveElement.current
+    previousActiveElement: previousActiveElement.current,
   };
 }
