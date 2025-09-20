@@ -4,6 +4,7 @@ import { openModalTypeAtom } from '../atoms/modalAtom';
 import { useEscapeKey } from '../hooks/useEscapeKey';
 import { useFocusManagement } from '../hooks/useFocusManagement';
 import { useFocusTrap } from '../hooks/useFocusTrap';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ModalPortal } from '../providers/ModalPortalProvider';
 import FormModal from './FormModal';
@@ -16,6 +17,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
   const [openModalType, setOpenModalType] = useAtom(openModalTypeAtom);
   const modalTitleId = useId();
   const modalContainerRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const handleClose = useCallback(() => {
     setOpenModalType(null);
@@ -72,6 +74,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
             bottom: 0,
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             zIndex: 1000,
+            transition: prefersReducedMotion ? 'none' : 'opacity 0.2s ease-out',
           }}
           onClick={handleClose}
           aria-hidden="true"
@@ -82,6 +85,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
           role="dialog"
           aria-modal="true"
           aria-labelledby={modalTitleId}
+          aria-describedby={`${modalTitleId}-description`}
           style={{
             position: 'fixed',
             top: '50%',
@@ -96,6 +100,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
             maxHeight: '90vh',
             display: 'flex',
             flexDirection: 'column',
+            transition: prefersReducedMotion ? 'none' : 'transform 0.2s ease-out, opacity 0.2s ease-out',
           }}
           onClick={(e) => e.stopPropagation()}
         >
