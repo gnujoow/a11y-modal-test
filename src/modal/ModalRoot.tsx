@@ -35,6 +35,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
   // 포커스 관리: 모달 열림/닫힘 시 포커스 이동
   useFocusManagement({
     isOpen: !!openModalType,
+    containerRef: modalContainerRef,
     triggerRef,
     titleElementSelector: `#${modalTitleId}, h1, h2, h3, h4, h5, h6, [role="heading"]`
   });
