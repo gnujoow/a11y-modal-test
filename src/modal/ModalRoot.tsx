@@ -3,7 +3,6 @@ import { useCallback, useId, useRef } from 'react';
 import { openModalTypeAtom } from '../atoms/modalAtom';
 import { useEscapeKey } from '../hooks/useEscapeKey';
 import { useFocusManagement } from '../hooks/useFocusManagement';
-import { useFocusTrap } from '../hooks/useFocusTrap';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ModalPortal } from '../providers/ModalPortalProvider';
@@ -42,12 +41,6 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
     titleElementSelector: `#${modalTitleId}, h1, h2, h3, h4, h5, h6, [role="heading"]`
   });
 
-  // 포커스 트랩: Tab 키 순환 네비게이션
-  useFocusTrap({
-    isActive: !!openModalType,
-    containerRef: modalContainerRef
-  });
-
   if (!openModalType) return null;
 
   const renderModalContent = () => {
@@ -75,6 +68,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             zIndex: 1000,
             transition: prefersReducedMotion ? 'none' : 'opacity 0.2s ease-out',
+            pointerEvents: 'auto',
           }}
           onClick={handleClose}
           aria-hidden="true"
@@ -101,6 +95,7 @@ const ModalRoot = ({ triggerRef }: ModalRootProps) => {
             display: 'flex',
             flexDirection: 'column',
             transition: prefersReducedMotion ? 'none' : 'transform 0.2s ease-out, opacity 0.2s ease-out',
+            pointerEvents: 'auto',
           }}
           onClick={(e) => e.stopPropagation()}
         >
